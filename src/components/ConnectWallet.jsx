@@ -18,11 +18,11 @@ function ConnectWallet() {
 
   return (
     <div>
-      {connectors.map((connector) => (
+        {connectors.map((connector) => (
         <button key={connector.id} onClick={() => connect({ connector })}>
-          Connect {connector.name}
+            {connector.name === 'Injected' ? 'Connect MetaMask' : `Connect ${connector.name}`}
         </button>
-      ))}
+        ))}
     </div>
   )
 }
