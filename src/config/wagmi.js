@@ -1,14 +1,15 @@
 import { createConfig, http } from 'wagmi'
-import { sepolia } from 'wagmi/chains'
-import { injected, metaMask } from 'wagmi/connectors'
+import { sepolia, polygon, arbitrum } from 'wagmi/chains'
+import { injected } from 'wagmi/connectors'
 
 export const config = createConfig({
-  chains: [sepolia],
+  chains: [sepolia, polygon, arbitrum],
   connectors: [
     injected(),
-    metaMask(),
   ],
   transports: {
     [sepolia.id]: http(import.meta.env.VITE_ALCHEMY_SEPOLIA_URL),
+    [polygon.id]: http(import.meta.env.VITE_ALCHEMY_POLYGON_URL),
+    [arbitrum.id]: http(import.meta.env.VITE_ALCHEMY_ARBITRUM_URL),
   },
 })
