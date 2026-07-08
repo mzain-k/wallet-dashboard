@@ -1,59 +1,29 @@
-import { useAccount, useConnect, useDisconnect, useBalance } from 'wagmi'
-import { sepolia, polygon, arbitrum } from 'wagmi/chains'
-
-const CHAINS = [
-  { chain: sepolia, label: 'Sepolia (Testnet)' },
-  { chain: polygon, label: 'Polygon' },
-  { chain: arbitrum, label: 'Arbitrum' },
-]
-
-function ChainBalance({ address, chain, label }) {
-  const { data: balance, isLoading } = useBalance({ address, chainId: chain.id })
-
-  return (
-    <div>
-      <span>{label}: </span>
-      {isLoading ? (
-        <span>Loading...</span>
-      ) : (
-        <span>{balance?.formatted} {balance?.symbol}</span>
-      )}
-    </div>
-  )
-}
+import { useAccount, useConnect, useDisconnect } from 'wagmi'
 
 function ConnectWallet() {
-  const { address, isConnected } = useAccount()
+  const { isConnected } = useAccount()
   const { connect, connectors } = useConnect()
   const { disconnect } = useDisconnect()
 
   if (isConnected) {
     return (
-      <div>
-        <p>Connected: {address}</p>
-        <hr />
-        <h3>Balances</h3>
-        {CHAINS.map(({ chain, label }) => (
-          <ChainBalance
-            key={chain.id}
-            address={address}
-            chain={chain}
-            label={label}
-          />
-        ))}
-        <hr />
-        <button onClick={() => disconnect()}>Disconnect</button>
-      </div>
+      <button
+        onClick={() => disconnect()}
+        className="text-sm text-red-400 hover:text-red-300 border border-red-400/30 px-4 py-2 rounded-xl transition-colors"
+      >
+        Disconnect
+      </button>
     )
   }
 
   return (
-    <div>
-        <button onClick={() => connect({ connector: connectors[0] })}>
-        Connect MetaMask
-        </button>
-    </div>
-    )
+    <button
+      onClick={() => connect({ connector: connectors[0] })}
+      className="bg-blue-500 hover:bg-blue-400 transition-colors text-white text-sm font-semibold px-4 py-2 rounded-xl"
+    >
+      Connect Wallet
+    </button>
+  )
 }
 
 export default ConnectWallet
