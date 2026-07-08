@@ -49,13 +49,11 @@ function ConnectWallet() {
 
   return (
     <div>
-      {connectors.map((connector) => (
-        <button key={connector.id} onClick={() => connect({ connector })}>
-          {connector.name === 'Injected' ? 'Connect MetaMask' : `Connect ${connector.name}`}
+        <button onClick={() => connect({ connector: connectors[0] })}>
+        Connect MetaMask
         </button>
-      ))}
     </div>
-  )
+    )
 }
 
 export default ConnectWallet
