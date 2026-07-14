@@ -8,13 +8,13 @@ export function useCoinPrices() {
     async function fetchPrices() {
       try {
         const res = await fetch(
-          `https://api.coingecko.com/api/v3/simple/price?ids=ethereum,matic-network&vs_currencies=usd`
+          `https://api.coingecko.com/api/v3/simple/price?ids=ethereum,polygon-ecosystem-token&vs_currencies=usd`
         )
         const data = await res.json()
         setPrices({
           ETH: data['ethereum']?.usd || 0,
-          POL: data['matic-network']?.usd || 0,
-          MATIC: data['matic-network']?.usd || 0,
+          POL: data['polygon-ecosystem-token']?.usd || 0,
+          MATIC: data['polygon-ecosystem-token']?.usd || 0,
         })
       } catch (err) {
         console.error('Price fetch failed:', err)
