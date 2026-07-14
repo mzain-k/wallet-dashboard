@@ -16,6 +16,7 @@ function BalanceCard({ address, chain, label, color, textColor, prices, isTestne
   const usdValue = !isTestnet && prices[symbol]
     ? (amount * prices[symbol]).toFixed(2)
     : null
+  console.log('symbol:', symbol, 'price:', prices[symbol])
 
   return (
     <div className="bg-white/5 border border-white/10 rounded-2xl p-5 flex flex-col gap-3">

@@ -6,10 +6,23 @@ const CHAINS = {
   arbitrum: { label: 'Arbitrum', color: 'bg-blue-500' },
 }
 
-function TxRow({ tx }) {
+const EXPLORERS = {
+  sepolia: 'https://sepolia.etherscan.io/tx',
+  polygon: 'https://polygonscan.com/tx',
+  arbitrum: 'https://arbiscan.io/tx',
+}
+
+function TxRow({ tx, chainKey }) {
+  const explorerUrl = `${EXPLORERS[chainKey]}/${tx.hash}`
+
   return (
-    <div className="flex items-center justify-between py-3 border-b border-white/5 last:border-0">
-      <div className="flex flex-col gap-1">
+    
+    <a  href={explorerUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="flex items-center justify-between py-3 border-b border-white/5 last:border-0 hover:bg-white/5 rounded-lg px-2 -mx-2 transition-colors"
+    >
+      <div className="flex flex'col gap-1">
         <span className="text-sm font-mono text-white/70">
           To: {tx.to?.slice(0, 6)}...{tx.to?.slice(-4)}
         </span>
@@ -17,12 +30,13 @@ function TxRow({ tx }) {
           {tx.metadata?.blockTimestamp?.slice(0, 10)}
         </span>
       </div>
-      <div className="text-right">
+      <div className="flex items-center gap-2">
         <span className="text-sm font-semibold text-green-400">
           {parseFloat(tx.value || 0).toFixed(4)} {tx.asset}
         </span>
+        <span className="text-white/20 text-xs">↗</span>
       </div>
-    </div>
+    </a>
   )
 }
 
@@ -39,7 +53,7 @@ function ChainTxCard({ chainKey, txs }) {
       {txs.length === 0 ? (
         <p className="text-white/30 text-sm">No transactions found</p>
       ) : (
-        txs.map((tx) => <TxRow key={tx.uniqueId} tx={tx} />)
+        txs.map((tx) => <TxRow key={tx.uniqueId} tx={tx} chainKey={chainKey} />)
       )}
     </div>
   )
